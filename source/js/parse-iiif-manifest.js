@@ -156,6 +156,7 @@ export default function parseIIIFManifest (manifest)
         imageLabel = thisImage.label || null;
 
         info = parseImageInfo(thisImage);
+
         url = info.url.slice(-1) !== '/' ? info.url + '/' : info.url;  // append trailing slash to url if it's not there.
 
         context = thisImage.service['@context'] || thisImage.service.type;
@@ -252,11 +253,18 @@ export default function parseIIIFManifest (manifest)
  */
 function parseImageInfo (resource)
 {
-    let url = resource['@id'] || resource.id;
+    let url_orig = resource['@id'] || resource.id;
     const fragmentRegex = /#xywh=([0-9]+,[0-9]+,[0-9]+,[0-9]+)/;
     let xywh = '';
     let stripURL = true;
 
+    var splitted = url_orig.split("?");
+    var url = splitted[0];
+    if  (splitted.length>1)
+    {
+        var pageQs = splitted[1];
+    }
+    else {pageQs = ""};
     if (/\/([0-9]+,[0-9]+,[0-9]+,[0-9]+)\//.test(url))
     {
         // if resource in image API format, extract region x,y,w,h from URL (after 4th slash from last)
@@ -284,9 +292,8 @@ function parseImageInfo (resource)
     }
 
     const imageInfo = {
-        url: url
+        url: url + "?" + pageQs
     };
-
     if (xywh.length)
     {
         // parse into separate components
