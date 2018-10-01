@@ -58,10 +58,14 @@ export default class IIIFSourceAdapter
 
         const quality = (page.api > 1.1) ? 'default' : 'native';
 
-        var splitted = page.url.split("#");
+        var splitted = page.url.split("?");
         const url = splitted[0] + "/";
-        const pn = splitted[1].replace("/","")
+        var pn = splitted[1];
 
-        return encodeURI(url + region + '/' + width + ',' + height + '/0/' + quality + '.jpg?page=' + pn);
+        if (!pn) {
+            pn = ""
+            }
+
+        return encodeURI(url + region + '/' + width + ',' + height + '/0/' + quality + '.jpg?' + pn);
     }
 }
