@@ -396,13 +396,16 @@ export default class Renderer
                 canvasX, canvasY,
                 Math.round(scaledTile.scaleRatio * 100));
         }
+        try {
+            this._ctx.drawImage(
+                img,
+                sourceXOffset, sourceYOffset,
+                sourceWidth, sourceHeight,
+                canvasX, canvasY,
+                destWidth, destHeight);
 
-        this._ctx.drawImage(
-            img,
-            sourceXOffset, sourceYOffset,
-            sourceWidth, sourceHeight,
-            canvasX, canvasY,
-            destWidth, destHeight);
+        } catch (test) {return }
+        finally {  }
     }
 
     _isTileForSourceVisible (pageIndex, tileSource)

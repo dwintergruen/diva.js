@@ -78,7 +78,7 @@ class Diva
             goDirectlyTo: 0,            // Default initial page to show (0-indexed)
             hashParamSuffix: null,      // Used when there are multiple document viewers on a page
             inFullscreen: false,        // Set to true to load fullscreen mode initially
-            inBookLayout: false,       // Set to true to view the document with facing pages in document mode
+            inBookLayout: true,       // Set to true to view the document with facing pages in document mode
             inGrid: false,              // Set to true to load grid view initially
             maxPagesPerRow: 8,          // Maximum number of pages per row in grid view
             maxZoomLevel: -1,           // Optional; defaults to the max zoom returned in the JSON response
