@@ -20,7 +20,7 @@
  * Toolbar plugins must have a toolbarIcon and toolbarSide attribute, with toolbarSide being either 'left' or 'right'
  **/
 
-import parseLabelValue from '../utils/label-value-parser';
+import parseLabelValue from '../utils/parse-label-value';
 
 export default class MetadataPlugin
 {
@@ -57,7 +57,7 @@ export default class MetadataPlugin
 
             let closeButton = document.createElement('button');
             closeButton.innerHTML = '&#10006';
-            closeButton.id = 'closeMetadata';
+            closeButton.classList.add('close-button');
             closeButton.onclick = () => 
             {
                 metadataDiv.style.display = 'none';            
@@ -72,16 +72,25 @@ export default class MetadataPlugin
                 let key = metadata[i];
 
                 let header = document.createElement('h4');
-                header.innerText = parseLabelValue(key).label;
+                header.innerHTML = parseLabelValue(key).label;
                 header.setAttribute('style', 'margin-bottom: 0');
 
                 let value = document.createElement('p');
-                value.innerText = parseLabelValue(key).value;
+                value.innerHTML = parseLabelValue(key).value;
                 value.setAttribute('style', 'margin-top: 0');
 
                 contentDiv.appendChild(header);
                 contentDiv.appendChild(value);
             }
+
+            // add link to manifest
+            let linkToManifest = document.createElement('p');
+            let manifestAnchor = document.createElement('a');
+            manifestAnchor.setAttribute("target", "_blank");
+            manifestAnchor.setAttribute("href", `${this.core.settings.objectData}`);
+            manifestAnchor.innerHTML = "IIIF Manifest";
+            linkToManifest.appendChild(manifestAnchor);
+            contentDiv.appendChild(linkToManifest);
 
             metadataDiv.appendChild(closeButton);
             metadataDiv.appendChild(title);
@@ -119,8 +128,8 @@ export default class MetadataPlugin
                 pos2 = pos4 - e.clientY;
                 pos3 = e.clientX;
                 pos4 = e.clientY;
-                metadataDiv.style.top = (metadataDiv.offsetTop - pos2) + 'px';
-                metadataDiv.style.left = (metadataDiv.offsetLeft - pos1) + 'px';
+                metadataDiv.style.top = `${(metadataDiv.offsetTop - pos2)}px`;
+                metadataDiv.style.left = `${(metadataDiv.offsetLeft - pos1)}px`;
             };
 
             document.onmouseup = () =>

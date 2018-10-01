@@ -45,6 +45,8 @@
                 goDirectlyTo: getUrlParameter("pn",0),
                 inBookLayout: false,
                 inGrid: false,
+                objectData: "./test/manifests/iiifv3.json",
+                plugins: [Diva.DownloadPlugin, Diva.ManipulationPlugin, Diva.MetadataPlugin]
             });
              $.getJSON("http://localhost:8888/docs/toc/238770",function(data) {
                      diva.toc = data;
